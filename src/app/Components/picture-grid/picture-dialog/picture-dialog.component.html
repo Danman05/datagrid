@@ -4,8 +4,8 @@
 
     <mat-form-field appearance="outline" class="w-100" *ngFor="let item of newFiles">
         <mat-label>Picture name</mat-label>
-        <input matInput placeholder="Placeholder" [formControl]="input" />
-        <img [src]="item.src">
+        <input matInput placeholder="Image name" [(ngModel)]="item.name"/>
+        <img style="max-width: 200px; max-height: 100%;" [src]="item.src">
     </mat-form-field>
 </mat-dialog-content>
 

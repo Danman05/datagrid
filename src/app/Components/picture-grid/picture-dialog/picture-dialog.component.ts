@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
@@ -23,11 +23,18 @@ export class PictureDialogComponent {
 
   input: FormControl = new FormControl('');
   newFiles: ImageInterface[] = [];
-  
+
+  /* 
+    Construtor -
+    Injection of dialog data into this component
+    Public data property.
+    Reference to the dialog etc. used when closing dialogs
+  */
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { callback: DialogDataSubmitCallback<any>; defaultValue: FileList },
-    private dialogRef: MatDialogRef<PictureDialogComponent>
+    private dialogRef: MatDialogRef<PictureDialogComponent>,
+
   ) { }
 
   ngOnInit() {
@@ -39,8 +46,8 @@ export class PictureDialogComponent {
         reader.onloadend = () => {
           const base64String = reader.result as string;
 
-          this.newFiles.push({name: "SampleImage", src: base64String}),
-          console.log(base64String);
+          console.log("user uploaded image");
+          this.newFiles.push({name: "", src: base64String});
         };
         if (file) {
           reader.readAsDataURL(file);
@@ -49,6 +56,7 @@ export class PictureDialogComponent {
     }
   }
   submitDialog() {
-    this.data.callback(this.newFiles)
+    this.data.callback(this.newFiles);
+    this.dialogRef.close()
   }
 }
