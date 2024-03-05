@@ -2,6 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 // Service, Interfaces & Components
 import { PictureDialogComponent } from './picture-dialog/picture-dialog.component';
@@ -21,7 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-picture-grid',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatDialogModule, MatIconModule, MatButtonModule, MatTableModule],
+  imports: [CommonModule, MatGridListModule, MatDialogModule, MatIconModule, MatButtonModule, MatTableModule, FormsModule],
   templateUrl: './picture-grid.component.html',
   styleUrl: './picture-grid.component.css',
   animations: [
@@ -36,6 +37,7 @@ export class PictureGridComponent {
 
   constructor(private dialog: MatDialog, private imageService: ImageService) { }
 
+  // Angular material table, most code comes from the table example
   dataSource: Observable<ImageInterface[]> = this.imageService.images$;
   columnsToDisplay = ['name', 'src'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
